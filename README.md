@@ -1,2 +1,3 @@
 # ch3server
 a multiprocess socket server
+WARNING:you should mkdir 'CH3_Reference_Library'and son dir 'A','B','C','D','Root',otherwise,process can't run...

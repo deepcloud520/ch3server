@@ -1,0 +1,178 @@
+[info]1.20 11:52:8 server start
+[info]1.20 11:52:51 127.0.0.1 connect.
+[warning]1.20 11:53:16 127.0.0.1 use s d login Failed
+[info]1.20 11:53:34 127.0.0.1 connect.
+[info]1.20 11:54:18 127.0.0.1 connect.
+[info]1.20 11:56:28 127.0.0.1 connect.
+[info]1.20 11:56:58 server start
+[info]1.20 11:57:4 127.0.0.1 connect.
+[info]1.20 11:57:9 127.0.0.1 connect.
+[warning]1.20 11:57:11 127.0.0.1 send data struct can't handle
+[info]1.20 11:57:23 127.0.0.1 login success
+[info]1.21 11:30:37 server start
+[info]1.21 11:47:29 server start
+[info]1.21 11:47:40 127.0.0.1 connect.
+[info]1.21 11:47:50 127.0.0.1 login success
+[info]1.21 11:48:52 server start
+[info]1.21 11:48:56 127.0.0.1 connect.
+[info]1.21 11:49:5 127.0.0.1 login success
+[info]1.21 11:51:35 server start
+[info]1.21 11:51:37 127.0.0.1 connect.
+[info]1.21 11:51:43 127.0.0.1 login success
+[info]1.21 11:53:51 server start
+[info]1.21 11:53:54 127.0.0.1 connect.
+[info]1.21 11:54:2 127.0.0.1 login success
+[info]1.21 11:54:45 server shutdown
+[info]1.21 11:54:59 server start
+[info]1.21 11:55:7 127.0.0.1 connect.
+[info]1.21 11:55:15 127.0.0.1 login success
+[info]1.21 11:55:59 server shutdown
+[info]1.21 11:56:2 server start
+[info]1.21 11:56:36 server shutdown
+[info]1.21 11:56:42 server start
+[info]1.21 11:56:53 server shutdown
+[info]1.21 11:57:9 server start
+[info]1.21 11:57:13 127.0.0.1 connect.
+[info]1.21 11:57:20 127.0.0.1 login success
+[info]1.21 11:58:19 127.0.0.1 connect.
+[info]1.21 11:58:27 server shutdown
+[info]1.21 11:58:48 server start
+[info]1.21 11:58:58 server shutdown
+[info]1.21 11:59:7 server start
+[info]1.21 11:59:9 127.0.0.1 connect.
+[info]1.21 11:59:15 127.0.0.1 login success
+[info]1.21 12:0:6 server shutdown
+[info]1.21 12:0:25 server start
+[info]1.21 12:0:27 127.0.0.1 connect.
+[info]1.21 12:0:34 127.0.0.1 login success
+[info]1.21 12:2:57 server shutdown
+[info]1.21 12:3:28 server start
+[info]1.21 12:3:30 127.0.0.1 connect.
+[info]1.21 12:3:35 127.0.0.1 login success
+[info]1.21 12:4:30 server shutdown
+[info]1.21 12:5:2 server start
+[info]1.21 12:5:7 127.0.0.1 connect.
+[info]1.21 12:5:13 127.0.0.1 login success
+[warning]1.21 12:5:32 swwm access file not found
+[info]1.21 12:17:44 server shutdown
+[info]1.21 12:18:47 server start
+[info]1.21 12:18:50 127.0.0.1 connect.
+[info]1.21 12:18:59 127.0.0.1 login success
+[warning]1.21 12:19:10 swwm access file not found
+[info]1.22 9:11:31 server start
+[info]1.22 9:28:38 server start
+[info]1.22 9:33:31 server start
+[info]1.22 9:33:51 server start
+[info]1.22 9:34:38 server start
+[info]1.22 9:35:10 server start
+[info]1.22 9:35:42 server start
+[info]1.22 9:35:58 server start
+[info]1.22 9:36:12 server start
+[info]1.22 9:45:15 server start
+[info]1.22 9:46:23 server start
+[info]1.22 9:47:42 server start
+[info]1.22 9:53:25 server start
+[info]1.22 9:53:42 server start
+[info]1.22 10:4:45 server start
+[info]1.22 10:5:30 127.0.0.1 connect.
+[info]1.22 10:5:40 127.0.0.1 login success
+[info]1.22 10:7:28 server start
+[info]1.22 10:7:37 127.0.0.1 connect.
+[info]1.22 10:7:43 127.0.0.1 login success
+[warning]1.22 10:7:47 swwm access denied
+[info]1.22 10:9:37 server start
+[info]1.22 10:9:43 127.0.0.1 connect.
+[info]1.22 10:9:56 127.0.0.1 login success
+[warning]1.22 10:10:2 swwm access denied
+[info]1.22 10:11:49 server start
+[info]1.22 10:11:51 127.0.0.1 connect.
+[info]1.22 10:11:57 127.0.0.1 login success
+[warning]1.22 10:12:20 swwm access file not found
+[info]1.22 10:17:40 server start
+[info]1.22 10:17:46 127.0.0.1 connect.
+[info]1.22 10:17:54 127.0.0.1 login success
+[warning]1.22 10:17:58 swwm access denied
+[info]1.22 10:22:24 server start
+[info]1.22 10:22:25 127.0.0.1 connect.
+[info]1.22 10:22:37 127.0.0.1 login success
+[warning]1.22 10:22:41 swwm access denied
+[info]1.22 10:25:17 server start
+[info]1.22 10:25:20 127.0.0.1 connect.
+[info]1.22 10:25:26 127.0.0.1 login success
+[warning]1.22 10:26:35 swwm access denied
+[info]1.22 10:27:38 server shutdown
+[info]1.22 10:28:21 server start
+[info]1.22 10:28:23 127.0.0.1 connect.
+[info]1.22 10:28:29 127.0.0.1 login success
+[warning]1.22 10:29:17 swwm access granted
+[info]1.22 11:22:41 server start
+[info]1.22 11:25:10 127.0.0.1 connect.
+[warning]1.22 11:25:20 127.0.0.1 send data struct can't handle
+[info]1.22 11:25:28 127.0.0.1 connect.
+[info]1.22 11:25:46 127.0.0.1 login success
+[info]1.22 11:26:7 127.0.0.1 connect.
+[info]1.22 11:26:13 127.0.0.1 login success
+[info]1.22 16:14:5 server start
+[info]1.22 16:14:56 127.0.0.1 connect.
+[info]1.22 16:15:43 127.0.0.1 login success
+[info]1.22 16:58:31 server start
+[info]1.22 16:58:36 127.0.0.1 connect.
+[info]1.22 16:58:43 127.0.0.1 login success
+[warning]1.22 16:58:46 swwm access denied
+[info]1.22 17:0:50 server start
+[info]1.22 17:0:51 127.0.0.1 connect.
+[info]1.22 17:1:0 127.0.0.1 login success
+[warning]1.22 17:1:5 swwm access denied
+[warning]1.22 17:1:17 swwm access denied
+[info]1.22 17:4:39 server start
+[info]1.22 17:4:49 127.0.0.1 connect.
+[info]1.22 17:5:4 127.0.0.1 login success
+[warning]1.22 17:5:8 swwm access denied
+[info]1.22 17:7:10 server start
+[info]1.22 17:7:14 127.0.0.1 connect.
+[info]1.22 17:7:20 127.0.0.1 login success
+[info]1.22 17:8:23 server start
+[info]1.22 17:8:36 127.0.0.1 connect.
+[info]1.22 17:8:50 127.0.0.1 login success
+[info]1.22 17:10:46 server start
+[info]1.22 17:10:51 127.0.0.1 connect.
+[info]1.22 17:10:57 127.0.0.1 login success
+[warning]1.22 17:11:36 swwm access file not found
+[warning]1.22 17:11:54 swwm access file not found
+[info]1.22 17:13:43 server start
+[info]1.22 17:13:46 127.0.0.1 connect.
+[info]1.22 17:13:52 127.0.0.1 login success
+[warning]1.22 17:14:19 swwm access granted
+[info]1.22 17:16:52 server start
+[info]1.22 17:16:56 127.0.0.1 connect.
+[info]1.22 17:17:3 127.0.0.1 login success
+[warning]1.22 17:17:17 swwm access granted
+[info]1.22 17:31:22 server start
+[info]1.22 17:31:27 127.0.0.1 connect.
+[info]1.22 17:31:32 127.0.0.1 login success
+[warning]1.22 17:32:12 swwm access granted
+[info]1.22 17:34:36 server start
+[info]1.22 17:34:38 127.0.0.1 connect.
+[info]1.22 17:34:49 127.0.0.1 login success
+[warning]1.22 17:35:8 swwm access granted
+[warning]1.22 17:35:25 swwm access file not found
+[warning]1.22 17:36:5 swwm access file not found
+[info]1.22 17:38:45 server start
+[info]1.22 17:39:42 127.0.0.1 connect.
+[warning]1.22 17:39:50 127.0.0.1 use \swwm deepcloud login Failed
+[info]1.22 17:40:10 127.0.0.1 connect.
+[info]1.22 17:40:16 127.0.0.1 login success
+[warning]1.22 17:40:58 swwm access granted
+[warning]1.22 17:41:13 swwm access file not found
+[info]1.22 17:47:1 server start
+[info]1.22 17:47:6 127.0.0.1 connect.
+[info]1.22 17:47:22 127.0.0.1 login success
+[info]1.22 17:48:29 server start
+[info]1.22 17:48:31 127.0.0.1 connect.
+[info]1.22 17:48:39 127.0.0.1 login success
+[error]1.22 17:48:50 File Exists Error!
+[info]1.22 17:50:55 server start
+[info]1.22 17:51:0 127.0.0.1 connect.
+[info]1.22 17:51:8 127.0.0.1 login success
+[warning]1.22 17:51:30 swwm access granted
+[warning]1.22 17:57:32 swwm access granted

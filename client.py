@@ -13,9 +13,12 @@ try:
     ms=conn.recv(1024).decode('utf-8').strip().split('|')
     ren.init_en(ms[1],ms[0])
     while True:
-        sstr=str(input(ht[0] + '>'))+'\n'
+        sstr=str(input(ht[0] + '>'))
         conn.send(ren.encode(sstr).encode('utf-8'))
         sstr=rde.decode(conn.recv(102400).decode('utf-8')).strip()
+        if sstr=='GOODBYE':
+            conn.close()
+            break
         print(sstr)
 except ConnectionRefusedError:
     print('connect to %s:%s failed.' % (sys.argv[1],sys.argv[2]))

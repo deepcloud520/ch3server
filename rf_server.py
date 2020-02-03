@@ -1,10 +1,18 @@
+#
+#    A mulitiprocess socket server
+#  Can login,read the data,and updata the data
+#  The send data is encode for RSA   
+#  Made by deepcloud,2020,POWER BY PYTHON3
+#
+
+# import
+
 import multiprocessing as mp
 import socket,sys,time,datetime,os,base64
 from RSA import *
-CH3PORT=12320
-ACCESS=('Root','A','B','C','D')
-ACCESS_VALUE={'Root':0,'A':1,'B':2,'C':3,'D':4}
-access_list={}
+
+# The user struct
+
 class User:
     def __init__(self,name,passwd,access):
         self.name=name
@@ -16,6 +24,9 @@ class User:
         return False
     def copy(self):return User(self.name,self.passwd,self.access)
     def __str__(self): return '{name:'+self.name+',passwd:'+self.passwd+',access:'+self.access+'}'
+    CH3PORT=1026
+
+# The errno
 ACCESS_DENIED=0
 ACCESS_GRANTED=1
 FILE_NOT_FOUND=2
@@ -23,19 +34,30 @@ NON_ERROR=3
 RUNTIME_ERROR=4
 FILE_EXISTS_ERROR=5
 CHECK_FAILED=6
+
+# The global value
 START_CLOCK=0
 LAST_USER=User('','','')
 NOW_USER=User('','','')
-
+ACCESS=('Root','A','B','C','D')
+ACCESS_VALUE={'Root':0,'A':1,'B':2,'C':3,'D':4}
+access_list={}
 last_stat=3
+
+# public function
+
+# get/set erno function
 def get_last():return last_stat
 def set_last(n=3):
     global last_stat
     last_stat=n
+# haha,maybe python3 moubles has this function,but I don't like...:)  
 def strip_list(lst):
     for i in range(len(lst)):
         lst[i]=lst[i].strip()
-#struct:month,day,hour,minute,second,nowsecond,canruntime(minute,conv to second),uname,uaccess,tgname,tgaccess,canruncmd
+        
+# Authorization code generation / check function
+# struct:month,day,hour,minute,second,nowsecond,canruntime(minute,conv to second),uname,uaccess,tgname,tgaccess,canruncmd
 def genenum(user,targetuser,can_run_cmd=10,can_run_time=10):
     d=datetime.datetime.now()
     st=':'.join((str(d.month),str(d.day),str(d.hour),str(d.minute),str(d.second),str(int(time.time())),str(int(can_run_time)*60),user.name,user.access,targetuser.name,targetuser.access,str(can_run_cmd)))
@@ -48,6 +70,7 @@ def checknum(num,user,target):
         return de_
     set_last(CHECK_FAILED)
     return 0
+# I Don't want to using loging
 def log(mode,info):
     d=datetime.datetime.now()
     strs='[%s]%s.%s %s:%s:%s %s\n' %(mode,d.month,d.day,d.hour,d.minute,d.second,info)
@@ -55,6 +78,7 @@ def log(mode,info):
     f.write(strs)
     f.close()
     print(strs,end='')
+# read the user table
 def read_access():
     f=open('access')
     res=f.readlines()
@@ -62,11 +86,13 @@ def read_access():
     for line in res:
         user,pswd,access=line.split('$')
         access_list.update({user:User(user,pswd,access.strip())})
+# Beautiful output function, like the command "dir", 'ls'
 def listdir(file):
     strs='dir in '+file+':\n'
     for n in os.listdir(file):
         strs+= n+'\t<dir>\n' if os.path.isdir(file+'/'+n) else n+'\n'
-    return strs 
+    return strs
+# Check if a file or folder exists
 def check_file(file,mode='get'):
     q=os.getcwd()+'/CH3_Reference_Library'
     for c in file[:-1]:
@@ -77,16 +103,18 @@ def check_file(file,mode='get'):
     q+='/'+file[-1]
     if mode=='get' and os.path.isdir(q):
         return listdir(q)
+    #'''
     elif mode=='set':
         pass
     elif mode=='get' and os.path.isfile(q):
-        set_last()
-        return True
+        pass
+    #'''
     else:
         set_last(FILE_NOT_FOUND)
         return False
     set_last()
     return True
+# Yes,function like name 
 def check_access(file):
     can_access=ACCESS[ACCESS_VALUE[NOW_USER.access]:]
     if file not in ACCESS:
@@ -97,7 +125,7 @@ def check_access(file):
         return False
     set_last()
     return True
-def access_file(cmd,file):
+def access(cmd,file):
     global START_CLOCK,NOW_USER,LAST_USER
     file_=file[0].split('-')
     nowdir=os.getcwd()+'/CH3_Reference_Library/'
@@ -156,6 +184,7 @@ def access_file(cmd,file):
             set_last(RUNTIME_ERROR)
             return False
         return 'gene a access num:\n'+genenum(NOW_USER,User(*(file[0].split('$'))),file[1],file[2])
+# loging info,and echo the client
 def check_ret(ret):
     global NOW_USER
     r=''
@@ -184,16 +213,19 @@ def check_ret(ret):
         set_last()
     if isinstance(ret,bool) or not ret:ret=''
     return r+ret
+# RSA ENCODE/DECODE FUNCTION 
 def recv(conn,rsa):
     ms=conn.recv(2048).decode('utf-8').strip()
     return rsa.decode(ms)
 def send(conn,rsa,msg):
     ec=rsa.encode(msg)
     conn.send(ec.encode('utf-8'))
+
+# msg handle function 
 def handle(conn,ht):
     global access_list,NOW_USER,LAST_USER,START_CLOCK
     log('info',ht[0]+' connect.')
-    #RSA init
+    # RSA init
     rde=RSA()
     rde.init_de()
     conn.send((str(rde.n)+'|'+str(rde.e)).encode('utf-8'))
@@ -204,8 +236,9 @@ def handle(conn,ht):
         conn.close()
         log('warning',ht[0]+' send data struct can\'t handle')
         return False
-    #struct:N|E
+    # struct:N|E
     ren.init_en(ms[1],ms[0])
+    # RSA PIPE INIT END
     ms=recv(conn,rde).strip().split('$')
     if len(ms)==1:
         send(conn,ren,'LOGIN FAILED.SHUTDOWN HANDLE')
@@ -224,7 +257,7 @@ def handle(conn,ht):
     while True:
         strs=recv(conn,rde).strip()
         if strs=='BYEBYE':
-            conn.send(b'GOODBYE')
+            send(conn,ren,'GOODBYE')
             log('info',NOW_USER.name+' deconnect.')
             conn.close()
             return True
@@ -236,10 +269,11 @@ def handle(conn,ht):
                     pass
                     #if command[0]=='debug':conn.send(' '.join((str(LAST_USER),str(NOW_USER),str(START_CLOCK))).encode('utf-8'))
                 elif len(command)>=2:
-                    r=check_ret(access_file(command[0],command[1:]))
+                    r=check_ret(access(command[0],command[1:]))
                     send(conn,ren,r)
                 else:
                     pass
+# main loop
 def loop():
     s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     s.bind(('',CH3PORT))

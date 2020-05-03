@@ -1,14 +1,18 @@
-#
-#    A mulitiprocess socket server
-#  Can login,read the data,and updata the data
-#  The send data is encode for RSA   
-#  Made by deepcloud,2020,POWER BY PYTHON3
-#
+info='''
+  
+  A mulitiprocess socket server
+  Can login,read the data,and updata the data
+  The send data is encode by RSA   
+  Made by deepcloud,2020,POWER BY PYTHON3
+
+  Last Updata: 17th,April,2020 > version 0.3.1
+
+     '''
 
 # import
 
 import multiprocessing as mp
-import socket,sys,time,datetime,os,base64
+import socket,sys,time,datetime,os,base64,twoFish,re
 from RSA import *
 
 # The user struct
@@ -24,9 +28,26 @@ class User:
         return False
     def copy(self):return User(self.name,self.passwd,self.access)
     def __str__(self): return '{name:'+self.name+',passwd:'+self.passwd+',access:'+self.access+'}'
-    CH3PORT=1026
+# Help msg
+
+helpmsg=info+'''
+
+------------------------------------------
+
+ get [path]
+ 获得文件或文件夹的内容
+ 
+ create [path] [text]
+ 在服务器上新造一个文件或文件夹。如果text未列出，将被视为创造一个文件夹。
+ 
+ rm [path] [-rf]
+ 
+ 
+------------------------------------------
+'''
 
 # The errno
+
 ACCESS_DENIED=0
 ACCESS_GRANTED=1
 FILE_NOT_FOUND=2
@@ -36,6 +57,8 @@ FILE_EXISTS_ERROR=5
 CHECK_FAILED=6
 
 # The global value
+
+CH3PORT=1430
 START_CLOCK=0
 LAST_USER=User('','','')
 NOW_USER=User('','','')
@@ -43,7 +66,7 @@ ACCESS=('Root','A','B','C','D')
 ACCESS_VALUE={'Root':0,'A':1,'B':2,'C':3,'D':4}
 access_list={}
 last_stat=3
-
+RE=re.compile(r'(Root\A|B|C|D)()')
 # public function
 
 # get/set erno function
@@ -51,11 +74,11 @@ def get_last():return last_stat
 def set_last(n=3):
     global last_stat
     last_stat=n
-# haha,maybe python3 moubles has this function,but I don't like...:)  
+# haha,maybe python3 moubles has this function,but I don't like they..:)  
 def strip_list(lst):
     for i in range(len(lst)):
         lst[i]=lst[i].strip()
-        
+
 # Authorization code generation / check function
 # struct:month,day,hour,minute,second,nowsecond,canruntime(minute,conv to second),uname,uaccess,tgname,tgaccess,canruncmd
 def genenum(user,targetuser,can_run_cmd=10,can_run_time=10):
@@ -70,7 +93,9 @@ def checknum(num,user,target):
         return de_
     set_last(CHECK_FAILED)
     return 0
-# I Don't want to using loging
+# import loging        is not good
+# def log(mode,info):  very great
+
 def log(mode,info):
     d=datetime.datetime.now()
     strs='[%s]%s.%s %s:%s:%s %s\n' %(mode,d.month,d.day,d.hour,d.minute,d.second,info)
@@ -146,7 +171,7 @@ def access(cmd,file):
         f.close()
         set_last(ACCESS_GRANTED)
         return ret
-    if cmd=='updata':
+    if cmd=='add':
         if not check_access(file_[0]):return False
         if len(file)>3:
             set_last(RUNTIME_ERROR)
@@ -184,6 +209,10 @@ def access(cmd,file):
             set_last(RUNTIME_ERROR)
             return False
         return 'gene a access num:\n'+genenum(NOW_USER,User(*(file[0].split('$'))),file[1],file[2])
+    if cmd=='rm':
+        if not check_access(file_[0]):return False
+        
+            
 # loging info,and echo the client
 def check_ret(ret):
     global NOW_USER
@@ -213,51 +242,52 @@ def check_ret(ret):
         set_last()
     if isinstance(ret,bool) or not ret:ret=''
     return r+ret
-# RSA ENCODE/DECODE FUNCTION 
-def recv(conn,rsa):
-    ms=conn.recv(2048).decode('utf-8').strip()
-    return rsa.decode(ms)
-def send(conn,rsa,msg):
-    ec=rsa.encode(msg)
-    conn.send(ec.encode('utf-8'))
+# ENCODE/DECODE FUNCTION 
+def recv(conn,tf):
+    ms=conn.recv(2048)
+    return tf.decode(ms).decode().strip()
+def send(conn,tf,msg):
+    ec=tf.encode(msg.encode())
+    conn.send(ec)
 
 # msg handle function 
 def handle(conn,ht):
     global access_list,NOW_USER,LAST_USER,START_CLOCK
     log('info',ht[0]+' connect.')
     # RSA init
-    rde=RSA()
-    rde.init_de()
-    conn.send((str(rde.n)+'|'+str(rde.e)).encode('utf-8'))
     ren=RSA()
     ms=conn.recv(1024).decode('utf-8').strip().split('|')
+
     if not ms or len(ms)==1:
         conn.send(b'\nLOGIN FAILED.SHUTDOWN HANDLE')
         conn.close()
         log('warning',ht[0]+' send data struct can\'t handle')
         return False
-    # struct:N|E
+
     ren.init_en(ms[1],ms[0])
-    # RSA PIPE INIT END
-    ms=recv(conn,rde).strip().split('$')
+    tf=twoFish.TwoFish()
+    conn.send(ren.encode(tf.key).encode())
+    # RSA-TwoFish PIPE INIT END
+    ms=recv(conn,tf).strip().split('$')
     if len(ms)==1:
-        send(conn,ren,'LOGIN FAILED.SHUTDOWN HANDLE')
+        send(conn,tf,'LOGIN FAILED.SHUTDOWN HANDLE')
         conn.close()
         log('warning',ht[0]+' send data struct can\'t handle')
         return False
     if ms[0] not in access_list or not access_list[ms[0]].login(ms[1]):
-        send(conn,ren,'LOGIN FAILED.SHUTDOWN HANDLE')
+        send(conn,tf,'LOGIN FAILED.SHUTDOWN HANDLE')
         conn.close()
         log('warning',ht[0]+' use '+ms[0]+' '+ms[1]+' login Failed')
         return False
-    send(conn,ren,'LOGIN SUCCESS')
+    send(conn,tf,'LOGIN SUCCESS')
     log('info',ht[0]+' login success')
     user=access_list[ms[0]]
     NOW_USER=user
+    ret=''
     while True:
-        strs=recv(conn,rde).strip()
+        strs=recv(conn,tf).strip()
         if strs=='BYEBYE':
-            send(conn,ren,'GOODBYE')
+            send(conn,tf,'GOODBYE')
             log('info',NOW_USER.name+' deconnect.')
             conn.close()
             return True
@@ -266,13 +296,15 @@ def handle(conn,ht):
             if command:
                 strip_list(command)
                 if len(command)==1:
-                    pass
+                    if command[0]=='help':
+                        ret=helpmsg
                     #if command[0]=='debug':conn.send(' '.join((str(LAST_USER),str(NOW_USER),str(START_CLOCK))).encode('utf-8'))
                 elif len(command)>=2:
-                    r=check_ret(access(command[0],command[1:]))
-                    send(conn,ren,r)
+                    ret=check_ret(access(command[0],command[1:]))
                 else:
                     pass
+                send(conn,tf,ret)
+                ret=''
 # main loop
 def loop():
     s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
@@ -290,8 +322,4 @@ def loop():
         s.close()
         return
 if __name__=='__main__':
-    # print(checknum(genenum(User('swwm','deepcloud','root'),User('bbll','','A')),User('swwm','deepcloud','root'),User('bbll','','A')))
     loop()
-    
-    
-    
